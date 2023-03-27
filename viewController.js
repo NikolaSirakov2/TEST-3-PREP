@@ -44,6 +44,9 @@ class ViewController {
       case "people":
         this.renderPeoplePage();
         break;
+      case "starships":
+        this.renderStarshipsPage();
+        break;
     }
   };
 
@@ -81,13 +84,11 @@ class ViewController {
     });
   };
 
-  
   renderPlanetPage = (url) => {
     let container = getEl("planetContainer");
     container.innerHTML = "";
 
-    let planet = easyFetch(url)
-    .then((result) => {
+    let planet = easyFetch(url).then((result) => {
       console.log(result);
       let card = document.createElement("div");
       card.classList.add("card");
@@ -101,19 +102,66 @@ class ViewController {
             <p class="card-text">${result.climate}</p>
           </div>`;
 
-    //   let planetBtn = document.createElement("a");
-    //   planetBtn.classList.add("btn", "btn-primary");
-    //   planetBtn.innerText = "Homeworld";
-
-    //   planetBtn.onclick = (e) => {
-    //     e.preventDefault();
-    //     this.renderPlanetPage(data.results[i].homeworld);
-    //     location.hash = "planet";
-    //   };
-
-    //   card.appendChild(planetBtn);
       container.appendChild(card);
     });
+  };
+
+  renderStarshipsPage = () => {
+    let container = getEl("shipsContainer");
+    container.innerHTML = "";
+
+    let overallResults = null;
+
+    let ships = makeAPICall(SW_URL + "starships")
+      .then(results => {
+        
+        let arr = results.results;
+
+        return arr;
+      })
+      .then((second) => {
+        
+        console.log(second);
+
+        return second.map( ship => {
+            if(!isNaN(ship.length)){
+            ship.length = Number(ship.length);
+            } else {
+                ship.length = 1;
+            }
+            return ship;
+        }).sort((a,b) => {
+            return a.length - b.length;
+        });
+        
+      })
+      
+    //   .then((res) => {
+    //     // for (let i = 0; i < res.length; i++) {
+    //     //   overallResults[i].partyId = res[i].name;
+    //     // }
+
+    //     console.log(overallResults);
+    //     return overallResults;
+    //   })
+        .then((data) => {
+            console.log(data);
+        for (let i = 0; i < data.length; i++) {
+          let card = document.createElement("div");
+          card.classList.add("card");
+          card.style.width = "200px";
+          card.style.background = "pink";
+
+          card.innerHTML = `
+          <div class="card-body">
+            <h5 class="card-title">${data[i].name}</h5>
+            <p class="card-text">${data[i].length}</p>
+            <p class="card-text">${data[i].passengers}</p>
+          </div>`;
+
+          container.appendChild(card);
+        }
+      });
   };
 }
 

@@ -1,4 +1,4 @@
-const PAGE_IDS = ["register", "login", "people", "planet", "error"];
+const PAGE_IDS = ["register", "login", "people", "planet", "starships", "error"];
 
 const SERVER_URL = 'http://localhost:8080';
 

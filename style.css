@@ -10,7 +10,7 @@
     background-color: bisque;
   }
 
-  #peopleContainer {
+  #peopleContainer, #shipsContainer {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
