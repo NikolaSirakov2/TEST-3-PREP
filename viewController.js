@@ -135,15 +135,6 @@ class ViewController {
         });
         
       })
-      
-    //   .then((res) => {
-    //     // for (let i = 0; i < res.length; i++) {
-    //     //   overallResults[i].partyId = res[i].name;
-    //     // }
-
-    //     console.log(overallResults);
-    //     return overallResults;
-    //   })
         .then((data) => {
             console.log(data);
         for (let i = 0; i < data.length; i++) {
